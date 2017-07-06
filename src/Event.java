@@ -1,5 +1,5 @@
 //: innerclasses/controller/Event.java
-// The common methods for any control event. 我该了一
+// The common methods for any control event. 我该了一 
  
 public abstract class Event {
   private long eventTime;
