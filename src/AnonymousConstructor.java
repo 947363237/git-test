@@ -1,5 +1,5 @@
 //: innerclasses/AnonymousConstructor.java
-// Creating a constructor for an anonymous inner class.
+// Creating a constructor for an anonymous inner class.www
 
 abstract class Base {
   public Base(int i) {
