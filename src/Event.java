@@ -1,6 +1,6 @@
 //: innerclasses/controller/Event.java
 // The common methods for any control event.
-
+ 
 public abstract class Event {
   private long eventTime;
   protected final long delayTime;
