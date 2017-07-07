@@ -2,47 +2,27 @@ package test;
 
 import java.util.Date;
 
-import test.A.B.C.D;
-
-public class Test3 {
-
-}
-
-class AA{
-    void show(){
-        System.out.println("AA");
-    }
-}
-
-class A extends AA{
-    public class B{
-        public class C{
-            public class D{
-                void show(){
-                    A.super.show();
-                }
-                
-                public B getB(){
-                    return B.this;
-                }
+class OutClass{
+    static class  OutClass2{
+        static  class  InnerClass{
+            public String str;
+            InnerClass(String str){
+                this.str = str;
             }
-            
-            void show(){
-                System.out.println("C");
+            public void show(){
+                System.out.println(str);
             }
         }
-        
-        void show(){
-            System.out.println("B");
-        }
     }
-    
-    void show(){
-        System.out.println("A");
+}
+
+public class Test3 extends OutClass.OutClass2.InnerClass{
+    Test3(OutClass.OutClass2 out) {
+        super("");
     }
-    
+
     public static void main(String[] args) {
-        System.out.println(new Date(System.nanoTime()));
     }
 }
+
  
