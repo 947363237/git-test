@@ -98,4 +98,15 @@ public class CollectionsTest{
             System.out.println(s);
         }
     }
+    
+    @Test
+    public void test4(){
+        Integer[] arr = {1,2,34,5,6,7};
+        Iterable<Integer> asList = Arrays.asList(arr);
+        arr[0] =  121;
+        for(Integer i:asList){
+            System.out.println(i);
+        }
+        ((List)asList).remove(0); // 这里会抛出异常：不支持的操作
+    }
 }
