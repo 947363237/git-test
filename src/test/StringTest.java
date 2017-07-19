@@ -66,7 +66,7 @@ public class StringTest {
     public void test5(){
         String s = "abcdefg";
         Pattern p = Pattern.compile("abcdefg");
-        Matcher matcher = p.matcher(s);
+        Matcher matcher = p.matcher(s); 
         System.out.println(matcher.find());
         System.out.println(matcher.lookingAt()); //开头匹配
         System.out.println(matcher.matches()); //完成匹配
