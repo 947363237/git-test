@@ -3,6 +3,8 @@
 package typeinfo.pets;
 import java.util.*;
 
+import test.Gerbil;
+
 public class LiteralPetCreator extends PetCreator {
     
   // No try block needed.

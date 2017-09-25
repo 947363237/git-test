@@ -55,6 +55,7 @@ public class Store extends ArrayList<Aisle> {
       add(new Aisle(nShelves, nProducts));
   }
   public String toString() {
+     int n = 0;
     StringBuilder result = new StringBuilder();
     for(Aisle a : this)
       for(Shelf s : a)
@@ -65,6 +66,7 @@ public class Store extends ArrayList<Aisle> {
     return result.toString();
   }
   public static void main(String[] args) {
+    //创建一个商店：商店有14个通道，每个通道5个货架，每个货架上拥有10个商品
     System.out.println(new Store(14, 5, 10));
   }
 } /* Output:

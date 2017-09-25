@@ -2,6 +2,7 @@
 // "Flyweight" Maps and Lists of sample data.
 package net.mindview.util;
 import java.util.*;
+
 import static net.mindview.util.Print.*;
 
 public class Countries {
@@ -131,10 +132,9 @@ public class Countries {
     {"URUGUAY","Montevideo"}, {"VENEZUELA","Caracas"},
   };
   // Use AbstractMap by implementing entrySet()
-  private static class FlyweightMap
-  extends AbstractMap<String,String> {
-    private static class Entry
-    implements Map.Entry<String,String> {
+  private static class FlyweightMap extends AbstractMap<String,String> {
+      
+    private static class Entry implements Map.Entry<String,String> {
       int index;
       Entry(int index) { this.index = index; }
       public boolean equals(Object o) {
@@ -149,9 +149,9 @@ public class Countries {
         return DATA[index][0].hashCode();
       }
     }
+    
     // Use AbstractSet by implementing size() & iterator()
-    static class EntrySet
-    extends AbstractSet<Map.Entry<String,String>> {
+    static class EntrySet extends AbstractSet<Map.Entry<String,String>> {
       private int size;
       EntrySet(int size) {
         if(size < 0)
@@ -163,8 +163,8 @@ public class Countries {
           this.size = size;
       }
       public int size() { return size; }
-      private class Iter
-      implements Iterator<Map.Entry<String,String>> {
+      
+      private class Iter implements Iterator<Map.Entry<String,String>> {
         // Only one Entry object per Iterator:
         private Entry entry = new Entry(-1);
         public boolean hasNext() {
@@ -178,17 +178,23 @@ public class Countries {
           throw new UnsupportedOperationException();
         }
       }
-      public
-      Iterator<Map.Entry<String,String>> iterator() {
+      
+      public Iterator<Map.Entry<String,String>> iterator() {
         return new Iter();
       }
+      
     }
+    
+    
     private static Set<Map.Entry<String,String>> entries =
       new EntrySet(DATA.length);
+    
     public Set<Map.Entry<String,String>> entrySet() {
       return entries;
     }
+    
   }
+  
   // Create a partial map of 'size' countries:
   static Map<String,String> select(final int size) {
     return new FlyweightMap() {

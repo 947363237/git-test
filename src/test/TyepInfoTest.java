@@ -85,9 +85,28 @@ public class TyepInfoTest {
         System.out.println(instance);
         System.out.println(DongWu.class.isAssignableFrom(Mao.class));
     }
+    
+    /**
+    * 总结
+    * instanceof
+    * Class.isInstance
+    * Class.isAssignableFrom
+    * 运行下面实例，三种方式功能几乎相同，区别：传入的参数类型不同
+    */
+    @Test
+    public void test6(){
+        //A类 是否是new D()对象的 超类 或 超超类... 特点：需要明确绑定具体类名，灵活性不高
+        System.out.println(new D() instanceof A);
+        //A类 是否是new D()对象的 超类 或 超超类... 特点：可以对对象进行类型的动态判定，传入的是一个任意对象，灵活性高
+        System.out.println(A.class.isInstance(new D()));
+        //A类 是否是 D类的 超类 或 超超类...  特点：可以对某个类型进行类型的动态判定，传入的是一个Class对象，灵活性高
+        System.out.println(A.class.isAssignableFrom(D.class));
+    }
 }
 class A{}
 class B extends A{}
+class C extends B{}
+class D extends C{}
 
 class DongWu{
     @Override
@@ -102,3 +121,4 @@ class Ji extends DongWu{}
 class Ya extends DongWu{}
 class E extends DongWu{}
 class LuSeGou extends Gou{}
+

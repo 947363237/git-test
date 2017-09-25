@@ -3,8 +3,7 @@
 package net.mindview.util;
 import java.util.*;
 
-public class CountingMapData
-extends AbstractMap<Integer,String> {
+public class CountingMapData extends AbstractMap<Integer,String> {
   private int size;
   private static String[] chars =
     "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z"

@@ -27,8 +27,8 @@ public class ShowMethods {
       Constructor[] ctors = c.getConstructors();
       if(args.length == 1) {
         for(Method method : methods)
-          print(
-            p.matcher(method.toString()).replaceAll(""));
+            print(
+                p.matcher(method.toString()).replaceAll(""));
         for(Constructor ctor : ctors)
           print(p.matcher(ctor.toString()).replaceAll(""));
         lines = methods.length + ctors.length;

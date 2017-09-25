@@ -3,6 +3,8 @@ package typeinfo;
 // Using a dynamic proxy to create a Null Object.
 import java.lang.reflect.*;
 import java.util.*;
+
+import test.Gerbil;
 import net.mindview.util.*;
 
 class NullRobotProxyHandler implements InvocationHandler {
@@ -26,14 +28,16 @@ class NullRobotProxyHandler implements InvocationHandler {
 }
 
 public class NullRobot {
-  public static Robot
-  newNullRobot(Class<? extends Robot> type) {
+    
+  public static Robot newNullRobot(Class<? extends Robot> type) {
     return (Robot)Proxy.newProxyInstance(
-      NullRobot.class.getClassLoader(),
+        Gerbil.class.getClassLoader(),
       new Class[]{ Null.class, Robot.class },
       new NullRobotProxyHandler(type));
   }	
+  
   public static void main(String[] args) {
+    System.getProperties().put("sun.misc.ProxyGenerator.saveGeneratedFiles", "true");
     Robot[] bots = {
       new SnowRemovalRobot("SnowBee"),
       newNullRobot(SnowRemovalRobot.class)
