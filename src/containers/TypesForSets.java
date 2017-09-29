@@ -14,7 +14,7 @@ class SetType {
 
 class HashType extends SetType {
   public HashType(int n) { super(n); }
-  public int hashCode() { return i; }
+  public int hashCode() { return i;}
 }
 
 class TreeType extends SetType
