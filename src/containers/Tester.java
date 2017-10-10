@@ -43,6 +43,7 @@ public class Tester<C> {
       List<Test<C>> tests, TestParam[] paramList) {
     new Tester<C>(cntnr, tests, paramList).timedTest();
   }
+  
   private void displayHeader() {
     // Calculate width and pad with '-':
     int width = fieldWidth * tests.size() + sizeWidth;
@@ -62,6 +63,7 @@ public class Tester<C> {
       System.out.format(stringField(), test.name);
     System.out.println();
   }
+  
   // Run the tests for this container:
   public void timedTest() {
     displayHeader();
@@ -79,4 +81,54 @@ public class Tester<C> {
       System.out.println();
     }
   }
+  
 } ///:~
+
+class Test2 extends Test<String>{
+
+    public Test2(String name) {
+        super(name);
+    }
+
+    @Override
+    int test(String container, TestParam tp) {
+        return 0;
+    }
+    
+    public static void main(String[] args) {
+        
+        testConllection(new LinkedList<String>());
+//        testConllection(new ArrayList<String>());
+        testConllection(new TreeSet<String>());
+    }
+
+    public static void testConllection(Collection<String> c){
+        Collection<String> arrayList = c;
+        ArrayList<Test<Collection<String>>> arrayList2 = new ArrayList<Test<Collection<String>>>();
+        arrayList2.add(new Test<Collection<String>>("增") {
+            @Override
+            int test(Collection<String> container, TestParam tp) {
+                for (int i = 0; i < tp.loops; i++) {
+                    for (int j = 0; j < tp.size; j++) {
+                        container.add(j+i+"");
+                    }
+                }
+                return 100000;
+            }
+        });
+        arrayList2.add(new Test<Collection<String>>("删") {
+            @Override
+            int test(Collection<String> container, TestParam tp) {
+                for (int i = 0; i < tp.loops; i++) {
+                    for (int j = 0; j < tp.size; j++) {
+                        container.remove(j+i+"");
+                    }
+                }
+                return 100000;
+            }
+        });
+        Tester<Collection<String>> tester = new Tester<Collection<String>>(arrayList,arrayList2);
+        tester.timedTest();
+    }
+    
+}

@@ -36,7 +36,7 @@ public class TypesForSets {
     }
     return set;
   }
-  static <T> void test(Set<T> set, Class<T> type) {
+  static <T> void test(Set<T> set, Class<T> type) { 
     fill(set, type);
     fill(set, type); // Try to add duplicates
     fill(set, type);

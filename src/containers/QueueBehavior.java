@@ -3,6 +3,7 @@ package containers;
 // Compares the behavior of some of the queues
 import java.util.concurrent.*;
 import java.util.*;
+
 import net.mindview.util.*;
 
 public class QueueBehavior {

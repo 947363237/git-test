@@ -1,32 +1,29 @@
 package test;
+
+import java.awt.Container;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.IdentityHashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
+import java.util.SortedMap;
+import java.util.SortedSet;
+import java.util.TreeSet;
+
+
 public class Test1 {
-    public static User createUser(String name,boolean isCreate){
-        User user = null;
-        if(isCreate){
-            class Person implements User{
-                private String name;
-    
-                private Person(String name){
-                    this.name = name;
-                }
-                
-                @Override
-                public String getName() {
-                    return this.name;
-                }
-            }
-            user = new Person(name);
-        }
-        return user;
-    }
-    
     public static void main(String[] args) {
-        User user = createUser("lis",true);
-        String name = user.getName();
-        System.out.println(name);
+        Map<String,String> map = new HashMap<String,String>();
+        for (int i = 0; i < 50; i++) {
+            map.put(i+"", i+"");
+        }
+        Iterator<String> iterator = map.keySet().iterator();
+        while (iterator.hasNext()) {
+            System.out.println(iterator.next());
+        }
     }
 }
 
-interface User{
-    String getName();
-}
