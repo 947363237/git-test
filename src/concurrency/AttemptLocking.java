@@ -40,9 +40,24 @@ public class AttemptLocking {
       { setDaemon(true); }
       public void run() {
         al.lock.lock();
+       
+        try {
+           Thread.sleep(3000);
+        }
+        catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         System.out.println("acquired");
       }
     }.start();
+    try {
+        Thread.sleep(1000);
+    }
+    catch (InterruptedException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+    }
     Thread.yield(); // Give the 2nd task a chance
     al.untimed(); // False -- lock grabbed by task
     al.timed();   // False -- lock grabbed by task

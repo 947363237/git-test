@@ -7,3 +7,4 @@ public class SerialNumberGenerator {
     return serialNumber++; // Not thread-safe
   }
 } ///:~
+    
