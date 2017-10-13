@@ -1,38 +1,43 @@
 package test;
 
+import java.io.IOException;
 import java.util.Random;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+
+import concurrency.NotifyVsNotifyAll;
+import concurrency.SleepingTask;
 
 public class Testt {
-    private static ThreadLocal<Integer> myThreadLocal = new ThreadLocal<Integer>(){
-        protected synchronized Integer initialValue() {
-            return new Random().nextInt(100);
-        };
-    };
-    
-//    protected int a;
-    public static void main(String[] args) {
-        for (int i = 0; i < 5; i++) {
-            new Thread(new Runnable() {
-                
+    private static int a = 0;
+    public static ExecutorService newCachedThreadPool = Executors.newCachedThreadPool();
+    public static synchronized  int zizeng(){
+        return a++;
+    }
+    public static void main(String[] args) throws InterruptedException {
+        Object object = new Object();
+        int i = 0;
+        for (int j=i; i < 1000; i++) {
+            newCachedThreadPool.execute(new Runnable() {
                 @Override
                 public void run() {
-                    Integer integer = myThreadLocal.get();
-                    System.out.println(integer);
+                    zizeng();
                 }
-            }).start();
+            });
+        }
+        System.out.println(i);
+//        Thread.sleep(1000);
+        newCachedThreadPool.shutdown();
+        System.out.println(a);
+        while(true){
+            if(newCachedThreadPool.isTerminated()){
+                System.out.println(a);
+                break;
+            }
         }
     }
-}
 
-class PairManager {
-    int a = 3;
-}
 
-  // Synchronize the entire method:
-class PairManager1 extends PairManager {
-    public synchronized void increment() {
-        a++;
-        System.out.println(a);
-    }
 }
-  

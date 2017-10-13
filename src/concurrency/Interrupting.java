@@ -65,11 +65,13 @@ public class Interrupting {
   }
   public static void main(String[] args) throws Exception {
     test(new SleepBlocked());
-    test(new IOBlocked(System.in));
-    test(new SynchronizedBlocked());
+    //你不能中断正在试图获取synchronized锁或者试图执行I/O操作的线程
+    test(new IOBlocked(System.in)); //你不能中断正在试图执行I/O操作的线程
+    test(new SynchronizedBlocked()); //不能中断正在试图获取synchronized锁的线程
     TimeUnit.SECONDS.sleep(3);
     print("Aborting with System.exit(0)");
-    System.exit(0); // ... since last 2 interrupts failed
+//    System.exit(0); // ... since last 2 interrupts failed 注释掉这句你会发现程序永远都不会结束
+    exec.shutdown();
   }
 } /* Output: (95% match)
 Interrupting SleepBlocked

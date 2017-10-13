@@ -32,10 +32,10 @@ class WaxOn implements Runnable {
   public void run() {
     try {
       while(!Thread.interrupted()) {
-        printnb("Wax On! ");
+        printnb("打蜡! "); //开始给汽车打蜡
         TimeUnit.MILLISECONDS.sleep(200);
-        car.waxed();
-        car.waitForBuffing();
+        car.waxed(); //打蜡完成
+        car.waitForBuffing(); //等待开始抛光
       }
     } catch(InterruptedException e) {
       print("Exiting via interrupt");
@@ -50,10 +50,10 @@ class WaxOff implements Runnable {
   public void run() {
     try {
       while(!Thread.interrupted()) {
-        car.waitForWaxing();
-        printnb("Wax Off! ");
+        car.waitForWaxing(); //等待开始打蜡
+        printnb("抛光! "); //打完蜡里
         TimeUnit.MILLISECONDS.sleep(200);
-        car.buffed();
+        car.buffed(); //抛光完成
       }
     } catch(InterruptedException e) {
       print("Exiting via interrupt");

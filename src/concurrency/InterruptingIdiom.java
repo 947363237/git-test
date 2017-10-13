@@ -27,7 +27,7 @@ class Blocked3 implements Runnable {
         // of n1, to guarantee proper cleanup of n1:
         try {
           print("Sleeping");
-          TimeUnit.SECONDS.sleep(1);
+          TimeUnit.SECONDS.sleep(4);
           // point2
           NeedsCleanup n2 = new NeedsCleanup(2);
           // Guarantee proper cleanup of n2:
@@ -53,13 +53,13 @@ class Blocked3 implements Runnable {
 
 public class InterruptingIdiom {
   public static void main(String[] args) throws Exception {
-    if(args.length != 1) {
-      print("usage: java InterruptingIdiom delay-in-mS");
-      System.exit(1);
-    }
+//    if(args.length != 1) {
+//      print("usage: java InterruptingIdiom delay-in-mS");
+//      System.exit(1);
+//    }
     Thread t = new Thread(new Blocked3());
     t.start();
-    TimeUnit.MILLISECONDS.sleep(new Integer(args[0]));
+    TimeUnit.MILLISECONDS.sleep(new Integer(1000));
     t.interrupt();
   }
 } /* Output: (Sample)
