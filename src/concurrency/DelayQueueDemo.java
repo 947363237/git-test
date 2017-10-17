@@ -8,24 +8,25 @@ import static net.mindview.util.Print.*;
 class DelayedTask implements Runnable, Delayed {
   private static int counter = 0;
   private final int id = counter++;
-  private final int delta;
-  private final long trigger;
+  private final int delta; //延迟的秒数
+  private final long trigger; //多久触发
   protected static List<DelayedTask> sequence =
     new ArrayList<DelayedTask>();
   public DelayedTask(int delayInMilliseconds) {
     delta = delayInMilliseconds;
     trigger = System.nanoTime() +
-      NANOSECONDS.convert(delta, MILLISECONDS);
+      NANOSECONDS.convert(delta, MILLISECONDS); //毫秒转换成纳秒
     sequence.add(this);
   }
+  //返回与此对象相关的剩余延迟时间，以给定的时间单位表示。
   public long getDelay(TimeUnit unit) {
     return unit.convert(
       trigger - System.nanoTime(), NANOSECONDS);
   }
   public int compareTo(Delayed arg) {
     DelayedTask that = (DelayedTask)arg;
-    if(trigger < that.trigger) return -1;
-    if(trigger > that.trigger) return 1;
+    if(trigger < that.trigger) return -1; //this的延迟短放前面
+    if(trigger > that.trigger) return 1; //否则放后面
     return 0;
   }
   public void run() { printnb(this + " "); }
@@ -36,6 +37,7 @@ class DelayedTask implements Runnable, Delayed {
   public String summary() {
     return "(" + id + ":" + delta + ")";
   }
+  //结束标记
   public static class EndSentinel extends DelayedTask {
     private ExecutorService exec;
     public EndSentinel(int delay, ExecutorService e) {

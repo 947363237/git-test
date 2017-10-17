@@ -47,6 +47,7 @@ class Car {
   }
 }
 
+//打蜡
 class WaxOn implements Runnable {
   private Car car;
   public WaxOn(Car c) { car = c; }
@@ -65,6 +66,7 @@ class WaxOn implements Runnable {
   }
 }
 
+//抛光
 class WaxOff implements Runnable {
   private Car car;
   public WaxOff(Car c) { car = c; }

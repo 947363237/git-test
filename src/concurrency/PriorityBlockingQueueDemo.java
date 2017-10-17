@@ -16,6 +16,7 @@ Runnable, Comparable<PrioritizedTask>  {
     this.priority = priority;
     sequence.add(this);
   }
+  //根据 priority 降序排列
   public int compareTo(PrioritizedTask arg) {
     return priority < arg.priority ? 1 :
       (priority > arg.priority ? -1 : 0);

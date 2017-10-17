@@ -7,9 +7,9 @@ import java.util.concurrent.*;
 import java.util.*;
 
 public class GreenhouseScheduler {
-  private volatile boolean light = false;
-  private volatile boolean water = false;
-  private String thermostat = "Day";
+  private volatile boolean light = false; //灯光
+  private volatile boolean water = false; //水
+  private String thermostat = "Day"; //自动调温器
   public synchronized String getThermostat() {
     return thermostat;
   }
@@ -19,7 +19,7 @@ public class GreenhouseScheduler {
   ScheduledThreadPoolExecutor scheduler =
     new ScheduledThreadPoolExecutor(10);
   public void schedule(Runnable event, long delay) {
-    scheduler.schedule(event,delay,TimeUnit.MILLISECONDS);
+    scheduler.schedule(event,delay,TimeUnit.MILLISECONDS); //在指定延迟后开启任务线程
   }
   public void
   repeat(Runnable event, long initialDelay, long period) {

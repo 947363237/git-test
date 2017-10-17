@@ -6,6 +6,7 @@ import java.util.concurrent.*;
 import java.util.*;
 
 // Read-only objects don't require synchronization:
+//顾客
 class Customer {
   private final int serviceTime;
   public Customer(int tm) { serviceTime = tm; }
@@ -50,6 +51,7 @@ class CustomerGenerator implements Runnable {
   }
 }
 
+//出纳员
 class Teller implements Runnable, Comparable<Teller> {
   private static int counter = 0;
   private final int id = counter++;
@@ -166,7 +168,7 @@ class TellerManager implements Runnable {
 }
 
 public class BankTellerSimulation {
-  static final int MAX_LINE_SIZE = 50;
+  static final int MAX_LINE_SIZE = 50; //最大排队数量
   static final int ADJUSTMENT_PERIOD = 1000;
   public static void main(String[] args) throws Exception {
     ExecutorService exec = Executors.newCachedThreadPool();

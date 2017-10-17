@@ -8,7 +8,7 @@ import static net.mindview.util.Print.*;
 class Horse implements Runnable {
   private static int counter = 0;
   private final int id = counter++;
-  private int strides = 0;
+  private int strides = 0; //步伐
   private static Random rand = new Random(47);
   private static CyclicBarrier barrier;
   public Horse(CyclicBarrier b) { barrier = b; }
@@ -29,6 +29,7 @@ class Horse implements Runnable {
     }
   }
   public String toString() { return "Horse " + id + " "; }
+  //足迹
   public String tracks() {
     StringBuilder s = new StringBuilder();
     for(int i = 0; i < getStrides(); i++)
@@ -38,12 +39,14 @@ class Horse implements Runnable {
   }
 }
 
+//赛马
 public class HorseRace {
-  static final int FINISH_LINE = 75;
+  static final int FINISH_LINE = 100;
   private List<Horse> horses = new ArrayList<Horse>();
   private ExecutorService exec =
     Executors.newCachedThreadPool();
   private CyclicBarrier barrier;
+  
   public HorseRace(int nHorses, final int pause) {
     barrier = new CyclicBarrier(nHorses, new Runnable() {
       public void run() {
@@ -73,8 +76,8 @@ public class HorseRace {
     }
   }
   public static void main(String[] args) {
-    int nHorses = 7;
-    int pause = 200;
+    int nHorses = 38;
+    int pause = 100;
     if(args.length > 0) { // Optional argument
       int n = new Integer(args[0]);
       nHorses = n > 0 ? n : nHorses;

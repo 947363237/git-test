@@ -21,7 +21,7 @@ class LiftOffRunner implements Runnable {
     try {
       while(!Thread.interrupted()) {
         LiftOff rocket = rockets.take();
-        rocket.run(); // Use this thread
+        rocket.run(); // Use this thread，足以：这里只是普通的调用run方法，并没有开启线程
       }
     } catch(InterruptedException e) {
       print("Waking from take()");

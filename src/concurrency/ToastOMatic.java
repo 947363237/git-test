@@ -21,6 +21,7 @@ class Toast {
 
 class ToastQueue extends LinkedBlockingQueue<Toast> {}
 
+//烤面包
 class Toaster implements Runnable {
   private ToastQueue toastQueue;
   private int count = 0;
@@ -29,13 +30,14 @@ class Toaster implements Runnable {
   public void run() {
     try {
       while(!Thread.interrupted()) {
-        TimeUnit.MILLISECONDS.sleep(
+        TimeUnit.MILLISECONDS.sleep( 
+            
           100 + rand.nextInt(500));
         // Make toast
-        Toast t = new Toast(count++);
+        Toast t = new Toast(count++); //生产面包
         print(t);
         // Insert into queue
-        toastQueue.put(t);
+        toastQueue.put(t); //将烤好的面包放进去
       }
     } catch(InterruptedException e) {
       print("Toaster interrupted");
@@ -44,7 +46,8 @@ class Toaster implements Runnable {
   }
 }
 
-// Apply butter to toast:
+// Apply butter to toast: 
+//涂奶油
 class Butterer implements Runnable {
   private ToastQueue dryQueue, butteredQueue;
   public Butterer(ToastQueue dry, ToastQueue buttered) {
@@ -55,10 +58,10 @@ class Butterer implements Runnable {
     try {
       while(!Thread.interrupted()) {
         // Blocks until next piece of toast is available:
-        Toast t = dryQueue.take();
-        t.butter();
+        Toast t = dryQueue.take(); //查看有没有烤好的面包，如果没有将一直阻塞
+        t.butter(); //给面包涂奶油
         print(t);
-        butteredQueue.put(t);
+        butteredQueue.put(t); //将涂过奶油的面包存进去
       }
     } catch(InterruptedException e) {
       print("Butterer interrupted");
@@ -67,7 +70,8 @@ class Butterer implements Runnable {
   }
 }
 
-// Apply jam to buttered toast:
+// Apply jam to buttered toast: 
+//涂果酱
 class Jammer implements Runnable {
   private ToastQueue butteredQueue, finishedQueue;
   public Jammer(ToastQueue buttered, ToastQueue finished) {
@@ -101,7 +105,7 @@ class Eater implements Runnable {
     try {
       while(!Thread.interrupted()) {
         // Blocks until next piece of toast is available:
-        Toast t = finishedQueue.take();
+        Toast t = finishedQueue.take(); //吃掉面包
         // Verify that the toast is coming in order,
         // and that all pieces are getting jammed:
         if(t.getId() != counter++ ||
@@ -120,9 +124,9 @@ class Eater implements Runnable {
 
 public class ToastOMatic {
   public static void main(String[] args) throws Exception {
-    ToastQueue dryQueue = new ToastQueue(),
-               butteredQueue = new ToastQueue(),
-               finishedQueue = new ToastQueue();
+    ToastQueue dryQueue = new ToastQueue(), //存放烤好的面包
+               butteredQueue = new ToastQueue(), //存放涂过奶油的面包
+               finishedQueue = new ToastQueue(); //存放涂过果酱的面包
     ExecutorService exec = Executors.newCachedThreadPool();
     exec.execute(new Toaster(dryQueue));
     exec.execute(new Butterer(dryQueue, butteredQueue));
