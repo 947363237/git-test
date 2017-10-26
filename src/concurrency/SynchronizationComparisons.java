@@ -18,7 +18,7 @@ abstract class Accumulator {
     new CyclicBarrier(N*2 + 1);
   protected volatile int index = 0;
   protected volatile long value = 0;
-  protected long duration = 0;
+  protected long duration = 0; //持续的时间
   protected String id = "error";
   protected final static int SIZE = 100000;
   protected static int[] preLoaded = new int[SIZE];
@@ -30,17 +30,19 @@ abstract class Accumulator {
   }
   public abstract void accumulate();
   public abstract long read();
+  //修改器
   private class Modifier implements Runnable {
     public void run() {
       for(long i = 0; i < cycles; i++)
         accumulate();
       try {
-        barrier.await();
+        barrier.await(); //注意这个是放在for循环外面的
       } catch(Exception e) {
         throw new RuntimeException(e);
       }
     }
   }
+  //阅读器
   private class Reader implements Runnable {
     private volatile long value;
     public void run() {
@@ -60,12 +62,13 @@ abstract class Accumulator {
       exec.execute(new Reader());
     }
     try {
-      barrier.await();
+//        System.out.println("===================");
+      barrier.await(); //等待前面8个线程全部执行完成
     } catch(Exception e) {
       throw new RuntimeException(e);
     }
     duration = System.nanoTime() - start;
-    printf("%-13s: %13d\n", id, duration);
+    printf("%-13s: %13d\n", id, duration); //持续时间
   }
   public static void
   report(Accumulator acc1, Accumulator acc2) {
@@ -74,10 +77,12 @@ abstract class Accumulator {
   }
 }
 
+//底线
 class BaseLine extends Accumulator {
   { id = "BaseLine"; }
   public void accumulate() {
-    value += preLoaded[index++];
+//    value += preLoaded[index++];  //作者源代码有问题
+    value += preLoaded[(index++)%SIZE]; //修复后，参考https://zhuanlan.zhihu.com/p/24547243
     if(index >= SIZE) index = 0;
   }
   public long read() { return value; }
@@ -86,7 +91,8 @@ class BaseLine extends Accumulator {
 class SynchronizedTest extends Accumulator {
   { id = "synchronized"; }
   public synchronized void accumulate() {
-    value += preLoaded[index++];
+//    value += preLoaded[index++];
+      value += preLoaded[(index++)%SIZE];
     if(index >= SIZE) index = 0;
   }
   public synchronized long read() {
@@ -100,7 +106,8 @@ class LockTest extends Accumulator {
   public void accumulate() {
     lock.lock();
     try {
-      value += preLoaded[index++];
+//      value += preLoaded[index++];
+        value += preLoaded[(index++)%SIZE];
       if(index >= SIZE) index = 0;
     } finally {
       lock.unlock();
@@ -125,7 +132,8 @@ class AtomicTest extends Accumulator {
     // a time doesn't work. But it still gives us
     // a performance indicator:
     int i = index.getAndIncrement();
-    value.getAndAdd(preLoaded[i]);
+//    value.getAndAdd(preLoaded[i]);
+    value.getAndAdd(preLoaded[i%SIZE]);
     if(++i >= SIZE)
       index.set(0);
   }
@@ -152,7 +160,7 @@ public class SynchronizationComparisons {
     Accumulator.report(lock, atomic);
   }
   public static void main(String[] args) {
-    int iterations = 5; // Default
+    int iterations = 7; // Default
     if(args.length > 0) // Optionally change iterations
       iterations = new Integer(args[0]);
     // The first time fills the thread pool:

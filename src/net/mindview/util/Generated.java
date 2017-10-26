@@ -15,4 +15,10 @@ public class Generated {
       (T[])java.lang.reflect.Array.newInstance(type, size);
     return new CollectionData<T>(gen, size).toArray(a);
   }
+  
+  public static void main(String[] args) {
+    Integer[] array = array(Integer.class,new RandomGenerator.Integer(),10);
+    
+    System.out.println(Arrays.toString(array));
+}
 } ///:~

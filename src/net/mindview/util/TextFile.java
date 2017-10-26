@@ -2,6 +2,8 @@
 // Static functions for reading and writing text files as
 // a single string, and treating a file as an ArrayList.
 package net.mindview.util;
+import io.FilePath;
+
 import java.io.*;
 import java.util.*;
 
@@ -67,13 +69,13 @@ public class TextFile extends ArrayList<String> {
   }
   // Simple test:
   public static void main(String[] args) {
-    String file = read("TextFile.java");
+    String file = read(FilePath.readPath);
     write("test.txt", file);
     TextFile text = new TextFile("test.txt");
     text.write("test2.txt");
     // Break into unique sorted list of words:
     TreeSet<String> words = new TreeSet<String>(
-      new TextFile("TextFile.java", "\\W+"));
+      new TextFile(FilePath.readPath, "\\W+"));
     // Display the capitalized words:
     System.out.println(words.headSet("a"));
   }

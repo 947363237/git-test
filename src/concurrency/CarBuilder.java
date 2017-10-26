@@ -1,3 +1,4 @@
+
 package concurrency;
 //: concurrency/CarBuilder.java
 // A complex example of tasks working together.
@@ -99,20 +100,20 @@ class Reporter implements Runnable {
 }
 
 abstract class Robot implements Runnable {
-  private RobotPool pool;
+  private RobotPool pool;  
   public Robot(RobotPool p) { pool = p; }
-  protected Assembler assembler;
+  protected Assembler assembler; //汇编程序
   public Robot assignAssembler(Assembler assembler) {
     this.assembler = assembler;
     return this;
   }
-  private boolean engage = false;
+  private boolean engage = false; //占用
   public synchronized void engage() {
     engage = true;
     notifyAll();
   }
-  // The part of run() that's different for each robot:
-  abstract protected void performService();
+  // The part of run() that's different for each robot: 每个机器人的run()不相同
+  abstract protected void performService(); //执行服务
   public void run() {
     try {
       powerDown(); // Wait until needed
@@ -133,7 +134,7 @@ abstract class Robot implements Runnable {
   private synchronized void
   powerDown() throws InterruptedException {
     engage = false;
-    assembler = null; // Disconnect from the Assembler
+    assembler = null; // Disconnect from the Assembler 断开的汇编程序
     // Put ourselves back in the available pool:
     pool.release(this);
     while(engage == false)  // Power down

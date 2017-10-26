@@ -17,6 +17,7 @@ class Customer {
 }
 
 // Teach the customer line to display itself:
+//顾客排队
 class CustomerLine extends ArrayBlockingQueue<Customer> {
   public CustomerLine(int maxLineSize) {
     super(maxLineSize);
@@ -58,7 +59,7 @@ class Teller implements Runnable, Comparable<Teller> {
   // Customers served during this shift:
   private int customersServed = 0;
   private CustomerLine customers;
-  private boolean servingCustomerLine = true;
+  private boolean servingCustomerLine = true;   //正在服务顾客队伍
   public Teller(CustomerLine cq) { customers = cq; }
   public void run() {
     try {
@@ -95,32 +96,35 @@ class Teller implements Runnable, Comparable<Teller> {
   }
 }
 
+//出纳员
 class TellerManager implements Runnable {
   private ExecutorService exec;
-  private CustomerLine customers;
-  private PriorityQueue<Teller> workingTellers =
+  private CustomerLine customers; //队伍
+  private PriorityQueue<Teller> workingTellers = //工作中的出纳员
     new PriorityQueue<Teller>();
-  private Queue<Teller> tellersDoingOtherThings =
+  private Queue<Teller> tellersDoingOtherThings = //休息中的出纳员
     new LinkedList<Teller>();
-  private int adjustmentPeriod;
+  private int adjustmentPeriod; //出纳员每次服务顾客的间隔时间
   private static Random rand = new Random(47);
   public TellerManager(ExecutorService e,
     CustomerLine customers, int adjustmentPeriod) {
     exec = e;
     this.customers = customers;
     this.adjustmentPeriod = adjustmentPeriod;
-    // Start with a single teller:
+    // Start with a single teller: 启动一个出纳员
     Teller teller = new Teller(customers);
     exec.execute(teller);
     workingTellers.add(teller);
   }
+  
+  //调整出纳员数量
   public void adjustTellerNumber() {
-    // This is actually a control system. By adjusting
-    // the numbers, you can reveal stability issues in
+    // This is actually a control system. By adjusting 实际上这是一个控制系统，通过调整
+    // the numbers, you can reveal stability issues in 这个数字，在这个控制机制里面，你可以观察到稳定性问题
     // the control mechanism.
-    // If line is too long, add another teller:
+    // If line is too long, add another teller: //如果队伍很长，在添加一个出纳员
     if(customers.size() / workingTellers.size() > 2) {
-        // If tellers are on break or doing
+        // If tellers are on break or doing 如果有出纳员在休息或者做别的事情，召回一个出纳员
         // another job, bring one back:
         if(tellersDoingOtherThings.size() > 0) {
           Teller teller = tellersDoingOtherThings.remove();
@@ -128,17 +132,18 @@ class TellerManager implements Runnable {
           workingTellers.offer(teller);
           return;
         }
-      // Else create (hire) a new teller
+      // Else create (hire) a new teller //没有休息的，就添加一个出纳员
       Teller teller = new Teller(customers);
       exec.execute(teller);
       workingTellers.add(teller);
       return;
     }
-    // If line is short enough, remove a teller:
+    
+    // If line is short enough, remove a teller: 如果队伍足够短，删除一个出纳员
     if(workingTellers.size() > 1 &&
       customers.size() / workingTellers.size() < 2)
         reassignOneTeller();
-    // If there is no line, we only need one teller:
+    // If there is no line, we only need one teller: 如果队伍是空的，我们只需要一个出纳员
     if(customers.size() == 0)
       while(workingTellers.size() > 1)
         reassignOneTeller();
@@ -167,16 +172,17 @@ class TellerManager implements Runnable {
   public String toString() { return "TellerManager "; }
 }
 
+//银行出纳员模拟
 public class BankTellerSimulation {
   static final int MAX_LINE_SIZE = 50; //最大排队数量
   static final int ADJUSTMENT_PERIOD = 1000;
   public static void main(String[] args) throws Exception {
     ExecutorService exec = Executors.newCachedThreadPool();
-    // If line is too long, customers will leave:
+    // If line is too long, customers will leave: 队伍排的太长顾客将离开
     CustomerLine customers =
       new CustomerLine(MAX_LINE_SIZE);
     exec.execute(new CustomerGenerator(customers));
-    // Manager will add and remove tellers as necessary:
+    // Manager will add and remove tellers as necessary: 管理员会根据需要添加和删除出纳员
     exec.execute(new TellerManager(
       exec, customers, ADJUSTMENT_PERIOD));
     if(args.length > 0) // Optional argument

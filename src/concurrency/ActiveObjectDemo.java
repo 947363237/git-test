@@ -39,6 +39,9 @@ public class ActiveObjectDemo {
         pause(2000);
         return x + y;
       }
+      
+      
+      
     });
   }
   public void shutdown() { ex.shutdown(); }
