@@ -18,7 +18,7 @@ public class BinaryFile {
     }
   }
   public static byte[]
-  read(String bFile) throws IOException {
+  read(String bFile) throws IOException { 
     return read(new File(bFile).getAbsoluteFile());
   }
   

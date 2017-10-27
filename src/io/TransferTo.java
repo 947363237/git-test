@@ -7,6 +7,10 @@ import java.io.*;
 
 public class TransferTo {
   public static void main(String[] args) throws Exception {
+      args = new String[2];
+      args[0] = FilePath.readPath;
+      args[1] = FilePath.outPath;
+      
     if(args.length != 2) {
       System.out.println("arguments: sourcefile destfile");
       System.exit(1);

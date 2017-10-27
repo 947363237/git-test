@@ -15,6 +15,8 @@ public class IntBufferDemo {
     ib.put(3, 1811);
     // Setting a new limit before rewinding the buffer.
     ib.flip();
+    int limit = ib.limit();
+    System.out.println(limit);
     while(ib.hasRemaining()) {
       int i = ib.get();
       System.out.println(i);

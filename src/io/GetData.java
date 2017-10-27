@@ -11,8 +11,9 @@ public class GetData {
     // Allocation automatically zeroes the ByteBuffer:
     int i = 0;
     while(i++ < bb.limit())
-      if(bb.get() != 0)
+      if(bb.get() != 0){
         print("nonzero");
+      }
     print("i = " + i);
     bb.rewind();
     // Store and read a char array:
@@ -23,7 +24,7 @@ public class GetData {
     print();
     bb.rewind();
     // Store and read a short:
-    bb.asShortBuffer().put((short)471142);
+    bb.asShortBuffer().put((short)471142); //java默认整数为int型，强转short，32位转16为，位数丢失，变成了12390，这是不准确的
     print(bb.getShort());
     bb.rewind();
     // Store and read an int:
