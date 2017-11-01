@@ -18,7 +18,7 @@ public class ZipCompress {
      BufferedOutputStream out =
       new BufferedOutputStream(zos);
     zos.setComment("A test of Java Zipping");
-    // No corresponding getComment(), though.
+    // No corresponding getComment(), though. //虽然没有想应的 getComment()
     for(String arg : args) {
       print("Writing file " + arg);
       BufferedReader in =
@@ -31,9 +31,9 @@ public class ZipCompress {
       out.flush();
     }
     out.close();
-    // Checksum valid only after the file has been closed!
+    // Checksum valid only after the file has been closed! 校验和只有在文件已经关闭有效
     print("Checksum: " + csum.getChecksum().getValue());
-    // Now extract the files:
+    // Now extract the files: 现在提取文件
     print("Reading file");
     FileInputStream fi = new FileInputStream("test.zip");
     CheckedInputStream csumi =
@@ -48,9 +48,10 @@ public class ZipCompress {
         System.out.write(x);
     }
     if(args.length == 1)
-    print("Checksum: " + csumi.getChecksum().getValue());
+    print("Checksum: " + csumi.getChecksum().getValue()); 
     bis.close();
-    // Alternative way to open and read Zip files:
+    
+    // Alternative way to open and read Zip files: 另一种提取zip文件的方法
     ZipFile zf = new ZipFile("test.zip");
     Enumeration e = zf.entries();
     while(e.hasMoreElements()) {

@@ -45,22 +45,28 @@ public class Worm implements Serializable {
   throws ClassNotFoundException, IOException {
     Worm w = new Worm(6, 'a');
     print("w = " + w);
+    
+    //持久化到worm.out文件
     ObjectOutputStream out = new ObjectOutputStream(
       new FileOutputStream("worm.out"));
     out.writeObject("Worm storage\n");
     out.writeObject(w);
     out.close(); // Also flushes output
+    
     ObjectInputStream in = new ObjectInputStream(
       new FileInputStream("worm.out"));
     String s = (String)in.readObject();
     Worm w2 = (Worm)in.readObject();
     print(s + "w2 = " + w2);
+    
+    //持久化到内存
     ByteArrayOutputStream bout =
       new ByteArrayOutputStream();
     ObjectOutputStream out2 = new ObjectOutputStream(bout);
     out2.writeObject("Worm storage\n");
     out2.writeObject(w);
     out2.flush();
+    
     ObjectInputStream in2 = new ObjectInputStream(
       new ByteArrayInputStream(bout.toByteArray()));
     s = (String)in2.readObject();

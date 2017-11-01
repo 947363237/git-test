@@ -1,13 +1,12 @@
 /arrays/
+/concurrency/
 /containers/
+/enumerated/
 /generics/
 /holding/
 /innerclass/
+/io/
 /net/
 /strings/
-/temp/
 /test/
 /typeinfo/
-/concurrency/
-/enumerated/
-/io/

@@ -14,8 +14,9 @@ public class UsingBuffers {
     }
   }
   public static void main(String[] args) {
-    char[] data = "UsingBuffers".toCharArray();
-    ByteBuffer bb = ByteBuffer.allocate(data.length * 2);
+    char[] data = "abc".toCharArray();
+    ByteBuffer bb = ByteBuffer.allocate(data.length*2);
+    System.out.println(bb.limit());
     CharBuffer cb = bb.asCharBuffer();
     cb.put(data);
     print(cb.rewind());

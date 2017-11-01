@@ -53,29 +53,41 @@ class Square extends Shape {
   public int getColor() { return color; }
 }
 
+
 class Line extends Shape {
-  private static int color = RED;
-  public static void
-  serializeStaticState(ObjectOutputStream os)
-  throws IOException { os.writeInt(color); }
-  public static void
-  deserializeStaticState(ObjectInputStream os)
-  throws IOException { color = os.readInt(); }
-  public Line(int xVal, int yVal, int dim) {
-    super(xVal, yVal, dim);
-  }
-  public void setColor(int newColor) { color = newColor; }
-  public int getColor() { return color; }
+    private static int color = RED;
+
+    public static void serializeStaticState(ObjectOutputStream os)
+             throws IOException {
+        os.writeInt(color); //把int值记录到os里面
+    }
+
+    public static void deserializeStaticState(ObjectInputStream os) throws IOException {
+        color = os.readInt(); //从os里取出int值并设置给Shape.color
+    }
+
+    public Line(int xVal, int yVal, int dim) {
+        super(xVal, yVal, dim);
+    }
+
+    public void setColor(int newColor) {
+        color = newColor;
+    }
+
+    public int getColor() {
+        return color;
+    }
 }
 
 public class StoreCADState {
   public static void main(String[] args) throws Exception {
-    List<Class<? extends Shape>> shapeTypes =
-      new ArrayList<Class<? extends Shape>>();
-    // Add references to the class objects:
-    shapeTypes.add(Circle.class);
-    shapeTypes.add(Square.class);
-    shapeTypes.add(Line.class);
+      //原版这段代码没有注释
+//    List<Class<? extends Shape>> shapeTypes =
+//      new ArrayList<Class<? extends Shape>>();
+//    // Add references to the class objects:
+//    shapeTypes.add(Circle.class);
+//    shapeTypes.add(Square.class);
+//    shapeTypes.add(Line.class);
     List<Shape> shapes = new ArrayList<Shape>();
     // Make some shapes:
     for(int i = 0; i < 10; i++)
@@ -86,7 +98,7 @@ public class StoreCADState {
     // Save the state vector:
     ObjectOutputStream out = new ObjectOutputStream(
       new FileOutputStream("CADState.out"));
-    out.writeObject(shapeTypes);
+//    out.writeObject(shapeTypes);
     Line.serializeStaticState(out);
     out.writeObject(shapes);
     // Display the shapes:

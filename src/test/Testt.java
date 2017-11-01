@@ -2,17 +2,34 @@ package test;
 
 import io.FilePath;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.Externalizable;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.nio.ByteBuffer;
-import java.nio.channels.FileChannel;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Serializable;
+import java.nio.charset.Charset;
+import java.util.Enumeration;
+import java.util.zip.Adler32;
+import java.util.zip.CheckedOutputStream;
+import java.util.zip.GZIPInputStream;
+import java.util.zip.GZIPOutputStream;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
+import java.util.zip.ZipOutputStream;
 
 
 public class Testt {
-    public static void main(String[] args) throws Exception {
-        ByteBuffer allocate = ByteBuffer.allocate(1024);
-        ByteBuffer wrap = allocate.wrap("abc".getBytes());
-        FileChannel channel = new FileOutputStream(FilePath.outPath).getChannel();
-        System.out.println(allocate.limit());
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
     }
 }
