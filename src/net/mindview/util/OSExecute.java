@@ -53,6 +53,6 @@ public class OSExecute {
   }
   
   public static void main(String[] args) {
-      command("java");
+      command("notepad");
   }
 } ///:~

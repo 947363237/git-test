@@ -3,10 +3,10 @@
 /containers/
 /enumerated/
 /generics/
-/holding/
 /innerclass/
 /io/
 /net/
 /strings/
 /test/
 /typeinfo/
+/holding/
